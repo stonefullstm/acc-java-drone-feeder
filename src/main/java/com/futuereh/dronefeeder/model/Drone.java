@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Entity Drone.
+ *
+ */
 @Entity
 public class Drone {
   @Id
@@ -14,6 +18,9 @@ public class Drone {
   @Column
   private String nome;
 
+  /**
+   * Construtor.
+   */
   public Drone(Long id, String nome) {
     super();
     this.id = id;
@@ -21,28 +28,28 @@ public class Drone {
   }
 
   /**
-   * @return the id
+   * getId.
    */
   public Long getId() {
     return id;
   }
 
   /**
-   * @param id the id to set
+   * setId.
    */
   public void setId(Long id) {
     this.id = id;
   }
 
   /**
-   * @return the nome
+   * getNome.
    */
   public String getNome() {
     return nome;
   }
 
   /**
-   * @param nome the nome to set
+   * setNome.
    */
   public void setNome(String nome) {
     this.nome = nome;
