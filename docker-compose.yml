@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  application:
+    image: spring
+    build: .
+    restart: always
+    ports:
+      - 8888:8888
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+     image: mysql:8.0.21
+     restart: always
+     environment:
+      MYSQL_DATABASE: 'dronefeeder'
+      MYSQL_ROOT_PASSWORD: 'root'
+     healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+     ports:
+      - 3306:3306
+     volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:
