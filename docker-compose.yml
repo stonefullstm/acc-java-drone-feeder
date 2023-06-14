@@ -1,27 +1,38 @@
-version: "3.7"
+# source: https://www.bezkoder.com/docker-compose-spring-boot-mysql/
+version: "3.8"
+
 services:
-  application:
-    image: spring
-    build: .
-    restart: always
+  mysqldb:
+    image: mysql:8.0.21
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dronefeeder
+#    env_file: 
+#      - .env
     ports:
-      - 8888:8888
+       - 3306:3306
+#      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - db:/var/lib/mysql
+  app:
     depends_on:
-      db:
-        condition: service_healthy
-  db:
-     image: mysql:8.0.21
-     restart: always
-     environment:
-      MYSQL_DATABASE: 'dronefeeder'
-      MYSQL_ROOT_PASSWORD: 'root'
-     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 10s
-      retries: 5
-     ports:
-      - 3306:3306
-     volumes:
-      - my-db:/var/lib/mysql
+      - mysqldb
+    build: .
+    restart: on-failure
+#    env_file: 
+#      - .env
+    ports:
+       - 8080:8080
+#      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+#    environment:
+#      SPRING_APPLICATION_JSON: '{
+#        "spring.datasource.url"  : "jdbc:mysql://mysqldb:$DB_DOCKER_PORT/dronefeeder?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false",
+#        "spring.datasource.username" : "$MYSQLDB_USER",
+#        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+#        "spring.datasource.driver-class-name": "com.mysql.cj.jdbc.Driver",
+#        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+#        "spring.jpa.hibernate.ddl-auto" : "update"}'
+
 volumes:
-  my-db:
+  db:
