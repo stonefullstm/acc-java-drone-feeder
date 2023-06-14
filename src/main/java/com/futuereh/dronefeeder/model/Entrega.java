@@ -1,5 +1,7 @@
 package com.futuereh.dronefeeder.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.Instant;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,9 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Entity Entrega.
+ *
+ */
 @Entity
 public class Entrega {
   @Id
@@ -32,6 +36,9 @@ public class Entrega {
   @JsonIgnore
   private Video video;
 
+  /**
+   * Construtor.
+   */
   public Entrega() {
     super();
     this.dataEntrega = Instant.now().toString();
