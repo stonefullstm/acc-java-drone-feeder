@@ -1,10 +1,16 @@
 package com.futuereh.dronefeeder.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * Entity Drone.
@@ -17,14 +23,46 @@ public class Drone {
   private Long id;
   @Column
   private String nome;
+  @Column
+  private double latitude;
+  @Column
+  private double longitude;
+  @JsonManagedReference
+  @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true,
+      fetch = FetchType.LAZY)
+  private List<Entrega> entregas;
+
+  public Drone() {
+    super();
+    this.entregas = new ArrayList<Entrega>();
+  }
 
   /**
-   * Construtor.
+   * getLatitude.
    */
-  public Drone(Long id, String nome) {
-    super();
-    this.id = id;
-    this.nome = nome;
+  public double getLatitude() {
+    return latitude;
+  }
+
+  /**
+   * setLatitude.
+   */
+  public void setLatitude(double latitude) {
+    this.latitude = latitude;
+  }
+
+  /**
+   * getLongitude.
+   */
+  public double getLongitude() {
+    return longitude;
+  }
+
+  /**
+   * setLongitude.
+   */
+  public void setLongitude(double longitude) {
+    this.longitude = longitude;
   }
 
   /**
@@ -53,6 +91,20 @@ public class Drone {
    */
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  /**
+   * getEntregas.
+   */
+  public List<Entrega> getEntregas() {
+    return entregas;
+  }
+
+  /**
+   * addEntrega.
+   */
+  public void addEntrega(Entrega entrega) {
+    this.entregas.add(entrega);
   }
 
 }
