@@ -24,6 +24,8 @@ public class Entrega {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @Column
+  private String dataCriacao;
+  @Column
   private String dataEntrega;
   @Column
   private StatusEntrega status;
@@ -41,8 +43,22 @@ public class Entrega {
    */
   public Entrega() {
     super();
-    this.dataEntrega = Instant.now().toString();
+    this.dataCriacao = Instant.now().toString();
     this.status = StatusEntrega.PENDENTE;
+  }
+
+  /**
+   * getDataCriacao.
+   */
+  public String getDataCriacao() {
+    return dataCriacao;
+  }
+
+  /**
+   * setDataCriacao.
+   */
+  public void setDataCriacao(String dataCriacao) {
+    this.dataCriacao = dataCriacao;
   }
 
   /**
