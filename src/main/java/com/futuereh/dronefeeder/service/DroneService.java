@@ -3,6 +3,7 @@ package com.futuereh.dronefeeder.service;
 import com.futuereh.dronefeeder.dto.DroneDto;
 import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.repository.DroneRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,12 @@ public class DroneService {
     drone.setLatitude(droneDto.getLatitude());
     drone.setLongitude(droneDto.getLongitude());
     return this.droneRepository.save(drone);
+  }
+
+  /**
+   * findAll.
+   */
+  public List<Drone> findAll() {
+    return this.droneRepository.findAll();
   }
 }
