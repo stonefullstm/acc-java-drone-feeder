@@ -3,6 +3,10 @@ package com.futuereh.dronefeeder;
 import com.futuereh.dronefeeder.dto.DroneDto;
 import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.repository.DroneRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -14,6 +18,8 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +37,9 @@ class DroneFeederApplicationTests {
 
   @SpyBean
   DroneRepository droneRepository;
+
+  @Captor
+  private ArgumentCaptor<Drone> droneCaptor;
 
   @BeforeEach
   public void setup() {
@@ -67,5 +76,37 @@ class DroneFeederApplicationTests {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
         .andExpect(jsonPath("$[0].nome").value(drone1.getNome()))
         .andExpect(jsonPath("$[1].nome").value(drone2.getNome()));
+  }
+
+  @Test
+  @Order(3)
+  @DisplayName("3 - Deve retornar lista vazia quando não existir drones na base de dados.")
+  void deveRetornarListaVaziaQuandoNaoExistirDronesNaBase() throws Exception {
+    mockMvc.perform(get("/drones").contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        .andExpect(content().string(containsString("[]")));
+  }
+
+  @Test
+  @Order(4)
+  @DisplayName("4 - Deve adicionar entrega quando existir drone na base de dados.")
+  void deveAdicionarEntregaQuandoExistirDroneNaBaseDeDados() throws Exception {
+    Drone drone = new Drone();
+    drone.setNome("Drone 1");
+
+    droneRepository.save(drone);
+    // Entrega entrega = new Entrega();
+    mockMvc
+        .perform(
+            post("/drones/" + drone.getId() + "/entrega").contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(null)))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        .andExpect(jsonPath("$.status").value("PENDENTE"));
+    verify(droneRepository, atLeast(1)).save(droneCaptor.capture());
+
+    assertThat(droneCaptor.getValue()).isNotNull();
+    assertThat(droneCaptor.getValue().getId()).isNotNull();
+    assertThat(droneCaptor.getValue().getNome()).isEqualTo(drone.getNome());
+    assertThat(droneCaptor.getValue().getEntregas()).hasSize(1);
   }
 }
