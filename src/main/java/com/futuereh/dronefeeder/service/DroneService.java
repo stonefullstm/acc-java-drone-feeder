@@ -62,4 +62,16 @@ public class DroneService {
         .orElseThrow(() -> new EntityNaoExistenteException("Drone não encontrado"));
     this.droneRepository.deleteById(id);
   }
+
+  /**
+   * update.
+   */
+  public Drone update(Long id, DroneDto droneDto) {
+    Drone drone = this.droneRepository.findById(id)
+        .orElseThrow(() -> new EntityNaoExistenteException("Drone não encontrado"));
+    drone.setNome(droneDto.getNome());
+    drone.setLatitude(droneDto.getLatitude());
+    drone.setLongitude(droneDto.getLongitude());
+    return this.droneRepository.save(drone);
+  }
 }
