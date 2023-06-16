@@ -8,6 +8,7 @@ import com.futuereh.dronefeeder.repository.DroneRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DroneService {
@@ -42,6 +43,7 @@ public class DroneService {
   /**
    * saveEntrega.
    */
+  @Transactional
   public Entrega saveEntrega(Long id) {
     Drone drone = this.droneRepository.findById(id)
         .orElseThrow(() -> new EntityNaoExistenteException("Drone não encontrado"));
@@ -50,5 +52,14 @@ public class DroneService {
     drone.addEntrega(entrega);
     this.droneRepository.save(drone);
     return entrega;
+  }
+
+  /**
+   * delete.
+   */
+  public void delete(Long id) {
+    this.droneRepository.findById(id)
+        .orElseThrow(() -> new EntityNaoExistenteException("Drone não encontrado"));
+    this.droneRepository.deleteById(id);
   }
 }
