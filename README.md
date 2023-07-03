@@ -24,13 +24,25 @@ O objetivo do projeto é desenvolver uma API utilizando princípios de Programa�
 
 ## Funcionalidades
 
-- Rota para criar um drone (POST /drones). O corpo da requisição deve estar no formato:
+- Endpoint para criar um drone (POST `/drones`). O corpo da requisição deve estar no formato:
   
 ~~~json
 {
   "nome": "Drone 01",
   "latitude": 10.0,
   "longitude": -1.0
+}
+~~~
+
+- Endpoints para ler todos os drones (GET `/drones`) e para ler um único drone pelo id (GET `/drones/id`)
+- Endpoint para remover um drone pelo id (DELETE `/drones/id`)
+- Endpoint para atualizar os dados de um drone pelo id (PUT `/drones/id`). O corpo da requisição deve estar no formato:
+
+~~~json
+{
+  "nome": "Drone 01",
+  "latitude": 10.5,
+  "longitude": -1.2
 }
 ~~~
 
