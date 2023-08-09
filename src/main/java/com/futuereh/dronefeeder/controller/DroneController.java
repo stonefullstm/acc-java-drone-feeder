@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value = "Drone Feeder", tags = {"CRUD operations for Drone"})
+@Api(value = "Drone Feeder", tags = {"Drone"})
 @RestController
 @RequestMapping("/drones")
 public class DroneController {
@@ -39,24 +39,28 @@ public class DroneController {
   }
 
   @GetMapping
+  @ApiOperation(value = "Find all drones", notes = "Find all drones on database")
   public ResponseEntity<List<Drone>> findAll() {
     List<Drone> drones = this.droneService.findAll();
     return ResponseEntity.status(HttpStatus.OK).body(drones);
   }
 
   @PostMapping("/{id}/entrega")
+  @ApiOperation(value = "Save a delivery", notes = "Save a delivery to an existing drone")
   public ResponseEntity<Entrega> saveEntrega(@PathVariable("id") Long id) {
     Entrega entrega = this.droneService.saveEntrega(id);
     return ResponseEntity.status(HttpStatus.OK).body(entrega);
   }
 
   @DeleteMapping("/{id}")
+  @ApiOperation(value = "Remove a drone", notes = "Remove an existing drone")
   public ResponseEntity<String> delete(@PathVariable("id") Long id) {
     this.droneService.delete(id);
     return ResponseEntity.status(HttpStatus.OK).body("Id removido: " + id);
   }
 
   @PutMapping("/{id}")
+  @ApiOperation(value = "Update a drone", notes = "Update an existing drone")
   public ResponseEntity<String> update(@PathVariable("id") Long id,
       @RequestBody DroneDto droneDto) {
     this.droneService.update(id, droneDto);
