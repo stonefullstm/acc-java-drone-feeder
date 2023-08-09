@@ -24,9 +24,7 @@ public class Drone {
   @Column
   private String nome;
   @Column
-  private double latitude;
-  @Column
-  private double longitude;
+  private String modelo;
   @JsonManagedReference
   @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true,
       fetch = FetchType.LAZY)
@@ -38,31 +36,17 @@ public class Drone {
   }
 
   /**
-   * getLatitude.
+   * getModelo.
    */
-  public double getLatitude() {
-    return latitude;
+  public String getModelo() {
+    return modelo;
   }
 
   /**
-   * setLatitude.
+   * setModelo.
    */
-  public void setLatitude(double latitude) {
-    this.latitude = latitude;
-  }
-
-  /**
-   * getLongitude.
-   */
-  public double getLongitude() {
-    return longitude;
-  }
-
-  /**
-   * setLongitude.
-   */
-  public void setLongitude(double longitude) {
-    this.longitude = longitude;
+  public void setModelo(String modelo) {
+    this.modelo = modelo;
   }
 
   /**

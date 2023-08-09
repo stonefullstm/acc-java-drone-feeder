@@ -21,8 +21,7 @@ public class DroneService {
   public Drone save(DroneDto droneDto) {
     Drone drone = new Drone();
     drone.setNome(droneDto.getNome());
-    drone.setLatitude(droneDto.getLatitude());
-    drone.setLongitude(droneDto.getLongitude());
+    drone.setModelo(droneDto.getModelo());
     return this.droneRepository.save(drone);
   }
 
@@ -70,8 +69,7 @@ public class DroneService {
     Drone drone = this.droneRepository.findById(id)
         .orElseThrow(() -> new EntityNaoExistenteException("Drone não encontrado"));
     drone.setNome(droneDto.getNome());
-    drone.setLatitude(droneDto.getLatitude());
-    drone.setLongitude(droneDto.getLongitude());
+    drone.setModelo(droneDto.getModelo());
     return this.droneRepository.save(drone);
   }
 }

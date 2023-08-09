@@ -4,6 +4,10 @@ import com.futuereh.dronefeeder.dto.DroneDto;
 import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.model.Entrega;
 import com.futuereh.dronefeeder.service.DroneService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(value = "Drone Feeder", tags = {"CRUD operations for Drone"})
 @RestController
 @RequestMapping("/drones")
 public class DroneController {
@@ -25,6 +30,9 @@ public class DroneController {
   DroneService droneService;
 
   @PostMapping
+  @ApiOperation(value = "Save a drone", notes = "Save a new drone and returns all its data")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+      @ApiResponse(code = 400, message = "Bad Request")})
   public ResponseEntity<Drone> save(@RequestBody DroneDto droneDto) {
     Drone drone = this.droneService.save(droneDto);
     return ResponseEntity.status(HttpStatus.OK).body(drone);

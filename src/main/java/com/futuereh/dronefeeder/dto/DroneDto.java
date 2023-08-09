@@ -6,8 +6,7 @@ package com.futuereh.dronefeeder.dto;
  */
 public class DroneDto {
   private String nome;
-  private double latitude;
-  private double longitude;
+  private String modelo;
 
   /**
    * getNome.
@@ -24,31 +23,17 @@ public class DroneDto {
   }
 
   /**
-   * getLatitude.
+   * getModelo.
    */
-  public double getLatitude() {
-    return latitude;
+  public String getModelo() {
+    return modelo;
   }
 
   /**
-   * setLatitude.
+   * setModelo.
    */
-  public void setLatitude(double latitude) {
-    this.latitude = latitude;
-  }
-
-  /**
-   * getLongitude.
-   */
-  public double getLongitude() {
-    return longitude;
-  }
-
-  /**
-   * setLongitude.
-   */
-  public void setLongitude(double longitude) {
-    this.longitude = longitude;
+  public void setModelo(String modelo) {
+    this.modelo = modelo;
   }
 
 }

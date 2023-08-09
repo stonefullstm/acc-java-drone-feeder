@@ -52,8 +52,7 @@ class DroneFeederApplicationTests {
   void deveAdicionarDroneNaBaseDeDados() throws Exception {
     DroneDto droneDto = new DroneDto();
     droneDto.setNome("Drone 1");
-    droneDto.setLatitude(1);
-    droneDto.setLongitude(0);
+    droneDto.setModelo("Modelo 1");
     mockMvc
         .perform(post("/drones").contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(droneDto)))
