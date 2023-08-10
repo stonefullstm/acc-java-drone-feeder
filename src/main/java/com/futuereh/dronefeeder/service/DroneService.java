@@ -49,8 +49,9 @@ public class DroneService {
     Entrega entrega = new Entrega();
     entrega.setDrone(drone);
     drone.addEntrega(entrega);
-    this.droneRepository.save(drone);
-    return entrega;
+    Drone savedDrone = this.droneRepository.save(drone);
+    List<Entrega> entregas = savedDrone.getEntregas();
+    return entregas.get(entregas.size() - 1);
   }
 
   /**

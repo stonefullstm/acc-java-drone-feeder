@@ -27,7 +27,7 @@ public class Drone {
   private String modelo;
   @JsonManagedReference
   @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true,
-      fetch = FetchType.LAZY)
+      fetch = FetchType.EAGER)
   private List<Entrega> entregas;
 
   public Drone() {
