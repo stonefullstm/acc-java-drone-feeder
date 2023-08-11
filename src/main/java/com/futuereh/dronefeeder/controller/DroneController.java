@@ -1,6 +1,7 @@
 package com.futuereh.dronefeeder.controller;
 
 import com.futuereh.dronefeeder.dto.DroneDto;
+import com.futuereh.dronefeeder.dto.EntregaDto;
 import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.model.Entrega;
 import com.futuereh.dronefeeder.service.DroneService;
@@ -47,8 +48,9 @@ public class DroneController {
 
   @PostMapping("/{id}/entrega")
   @ApiOperation(value = "Save a delivery", notes = "Save a delivery to an existing drone")
-  public ResponseEntity<Entrega> saveEntrega(@PathVariable("id") Long id) {
-    Entrega entrega = this.droneService.saveEntrega(id);
+  public ResponseEntity<Entrega> saveEntrega(@PathVariable("id") Long id,
+      @RequestBody EntregaDto entregaDto) {
+    Entrega entrega = this.droneService.saveEntrega(id, entregaDto);
     return ResponseEntity.status(HttpStatus.OK).body(entrega);
   }
 

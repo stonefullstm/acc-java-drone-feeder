@@ -24,6 +24,10 @@ public class Entrega {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @Column
+  private double latitude;
+  @Column
+  private double longitude;
+  @Column
   private String dataCriacao;
   @Column
   private String dataEntrega;
@@ -45,6 +49,34 @@ public class Entrega {
     super();
     this.dataCriacao = Instant.now().toString();
     this.status = StatusEntrega.PENDENTE;
+  }
+
+  /**
+   * getLatitude.
+   */
+  public double getLatitude() {
+    return latitude;
+  }
+
+  /**
+   * setLatitude.
+   */
+  public void setLatitude(double latitude) {
+    this.latitude = latitude;
+  }
+
+  /**
+   * getLongitude.
+   */
+  public double getLongitude() {
+    return longitude;
+  }
+
+  /**
+   * setLongitude.
+   */
+  public void setLongitude(double longitude) {
+    this.longitude = longitude;
   }
 
   /**

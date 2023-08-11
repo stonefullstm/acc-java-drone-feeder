@@ -1,6 +1,7 @@
 package com.futuereh.dronefeeder.service;
 
 import com.futuereh.dronefeeder.dto.DroneDto;
+import com.futuereh.dronefeeder.dto.EntregaDto;
 import com.futuereh.dronefeeder.exceptions.EntityNaoExistenteException;
 import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.model.Entrega;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DroneService {
+
+  private final String ERROR_MESSAGE = "Drone não encontrado";
   @Autowired
   private DroneRepository droneRepository;
 
@@ -43,10 +46,12 @@ public class DroneService {
    * saveEntrega.
    */
   @Transactional
-  public Entrega saveEntrega(Long id) {
+  public Entrega saveEntrega(Long id, EntregaDto entregaDto) {
     Drone drone = this.droneRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException("Drone não encontrado"));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE));
     Entrega entrega = new Entrega();
+    entrega.setLatitude(entregaDto.getLatitude());
+    entrega.setLongitude(entregaDto.getLongitude());
     entrega.setDrone(drone);
     drone.addEntrega(entrega);
     Drone savedDrone = this.droneRepository.save(drone);
@@ -59,7 +64,7 @@ public class DroneService {
    */
   public void delete(Long id) {
     this.droneRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException("Drone não encontrado"));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE));
     this.droneRepository.deleteById(id);
   }
 
@@ -68,7 +73,7 @@ public class DroneService {
    */
   public Drone update(Long id, DroneDto droneDto) {
     Drone drone = this.droneRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException("Drone não encontrado"));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE));
     drone.setNome(droneDto.getNome());
     drone.setModelo(droneDto.getModelo());
     return this.droneRepository.save(drone);
