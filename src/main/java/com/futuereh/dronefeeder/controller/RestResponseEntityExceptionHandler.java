@@ -18,4 +18,12 @@ public class RestResponseEntityExceptionHandler {
     response.put("error", ex.getMessage());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
   }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  protected ResponseEntity<HashMap<String, String>> handleInvalidParam(
+      IllegalArgumentException ex) {
+    HashMap<String, String> response = new HashMap<String, String>();
+    response.put("error", "Parâmetro inválido");
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+  }
 }
