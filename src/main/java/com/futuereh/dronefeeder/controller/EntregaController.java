@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.model.Entrega;
 import com.futuereh.dronefeeder.model.StatusEntrega;
 import com.futuereh.dronefeeder.service.EntregaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiParam;
 
 @Api(value = "Drone Feeder", tags = {"Delivery"})
@@ -25,9 +28,11 @@ public class EntregaController {
   @Autowired
   EntregaService entregaService;
 
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+      @ApiResponse(code = 400, message = "Parâmetro inválido")})
   @GetMapping("/{id}")
   @ApiOperation(value = "Find all deliveries",
-      notes = "Find all deliveries made by a drone and filtered by status")
+      notes = "Find all deliveries made by a drone and filtered by status", response = Drone.class)
   public ResponseEntity<List<Entrega>> findByDrone(
       @ApiParam(name = "id", value = "Drone id") @PathVariable("id") Long id,
       @ApiParam(name = "status", value = "Delivery status", required = false,
