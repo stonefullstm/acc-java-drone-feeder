@@ -29,8 +29,7 @@ O objetivo do projeto é desenvolver uma API utilizando princípios de Programa�
 ~~~json
 {
   "nome": "Drone 01",
-  "latitude": 10.0,
-  "longitude": -1.0
+  "modelo": "L900 PRO",
 }
 ~~~
 
@@ -41,10 +40,11 @@ O objetivo do projeto é desenvolver uma API utilizando princípios de Programa�
 ~~~json
 {
   "nome": "Drone 01",
-  "latitude": 10.5,
-  "longitude": -1.2
+  "modelo": "STM900 PRO",
 }
 ~~~
+
+A documentação completa da API se encontra [nesta página](http://localhost:8080/swagger-ui.html), a qual pode ser acessada após a execução da aplicação.
 
 ## Tecnologias utilizadas
  
