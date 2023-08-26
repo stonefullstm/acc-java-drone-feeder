@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class DroneController {
   @ApiOperation(value = "Save a drone", notes = "Save a new drone and returns all its data")
   @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
       @ApiResponse(code = 400, message = "Bad Request")})
-  public ResponseEntity<Drone> save(@RequestBody DroneDto droneDto) {
+  public ResponseEntity<Drone> save(@Valid @RequestBody DroneDto droneDto) {
     Drone drone = this.droneService.save(droneDto);
     return ResponseEntity.status(HttpStatus.OK).body(drone);
   }
@@ -49,7 +50,7 @@ public class DroneController {
   @PostMapping("/{id}/entrega")
   @ApiOperation(value = "Save a delivery", notes = "Save a delivery to an existing drone")
   public ResponseEntity<Entrega> saveEntrega(@PathVariable("id") Long id,
-      @RequestBody EntregaDto entregaDto) {
+      @Valid @RequestBody EntregaDto entregaDto) {
     Entrega entrega = this.droneService.saveEntrega(id, entregaDto);
     return ResponseEntity.status(HttpStatus.OK).body(entrega);
   }

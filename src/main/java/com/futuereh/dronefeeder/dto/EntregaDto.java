@@ -1,11 +1,16 @@
 package com.futuereh.dronefeeder.dto;
 
+import javax.validation.constraints.NotNull;
+
+
 /**
  * Class EntregaDto.
  *
  */
 public class EntregaDto {
+  @NotNull(message = "Latitude is required")
   private double latitude;
+  @NotNull(message = "Longitude is required")
   private double longitude;
 
   /**

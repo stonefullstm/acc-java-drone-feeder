@@ -36,6 +36,7 @@ public class Entrega {
   @JsonBackReference
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "drone_id")
+
   private Drone drone;
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "video_id")

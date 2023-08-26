@@ -1,11 +1,15 @@
 package com.futuereh.dronefeeder.dto;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Class DroneDto.
  *
  */
 public class DroneDto {
+  @NotNull(message = "Nome is required")
   private String nome;
+  @NotNull(message = "Modelo is required")
   private String modelo;
 
   /**
