@@ -7,9 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.futuereh.dronefeeder.dto.StatusEntregaDto;
 import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.model.Entrega;
 import com.futuereh.dronefeeder.model.StatusEntrega;
@@ -40,6 +43,14 @@ public class EntregaController {
     Optional<StatusEntrega> statusEntrega = status.map(this::toStatusEntrega);
     List<Entrega> entregas = this.entregaService.findByDrone(id, statusEntrega);
     return ResponseEntity.status(HttpStatus.OK).body(entregas);
+  }
+
+  @PutMapping("/{id}")
+  @ApiOperation(value = "Update status delivery", notes = "Update status of an existing delivery")
+  public ResponseEntity<String> update(@PathVariable("id") Long id,
+      @RequestBody StatusEntregaDto statusEntregaDto) {
+    this.entregaService.update(id, statusEntregaDto);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Atualizado com sucesso");
   }
 
   private StatusEntrega toStatusEntrega(String status) {
