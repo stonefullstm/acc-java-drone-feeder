@@ -1,6 +1,7 @@
 package com.futuereh.dronefeeder;
 
 import com.futuereh.dronefeeder.dto.DroneDto;
+import com.futuereh.dronefeeder.dto.EntregaDto;
 import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.repository.DroneRepository;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,11 +26,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestPropertySource(locations = "classpath:application-integrationtests.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DroneFeederApplicationTests {
   @Autowired
@@ -94,11 +97,13 @@ class DroneFeederApplicationTests {
     drone.setNome("Drone 1");
 
     droneRepository.save(drone);
-    // Entrega entrega = new Entrega();
+    EntregaDto entregaDto = new EntregaDto();
+    entregaDto.setLatitude(1.0);
+    entregaDto.setLongitude(-1.0);
     mockMvc
         .perform(
             post("/drones/" + drone.getId() + "/entrega").contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(null)))
+                .content(new ObjectMapper().writeValueAsString(entregaDto)))
         .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
         .andExpect(jsonPath("$.status").value("PENDENTE"));
     verify(droneRepository, atLeast(1)).save(droneCaptor.capture());
