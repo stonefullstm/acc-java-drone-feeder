@@ -34,7 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-integrationtests.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class DroneFeederApplicationTests {
+class DroneControllerTests {
   @Autowired
   private MockMvc mockMvc;
 

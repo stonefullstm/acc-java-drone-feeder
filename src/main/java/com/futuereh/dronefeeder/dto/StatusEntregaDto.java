@@ -1,5 +1,6 @@
 package com.futuereh.dronefeeder.dto;
 
+import javax.validation.constraints.NotNull;
 import com.futuereh.dronefeeder.model.StatusEntrega;
 import com.futuereh.dronefeeder.model.Video;
 
@@ -8,6 +9,7 @@ import com.futuereh.dronefeeder.model.Video;
  *
  */
 public class StatusEntregaDto {
+  @NotNull(message = "Status value is required")
   private StatusEntrega status;
   private Video video;
 
