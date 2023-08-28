@@ -48,10 +48,10 @@ public class EntregaController {
 
   @PutMapping("/{id}")
   @ApiOperation(value = "Update status delivery", notes = "Update status of an existing delivery")
-  public ResponseEntity<String> update(@PathVariable("id") Long id,
+  public ResponseEntity<Entrega> update(@PathVariable("id") Long id,
       @RequestBody StatusEntregaDto statusEntregaDto) {
-    this.entregaService.update(id, statusEntregaDto);
-    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Atualizado com sucesso");
+    Entrega entrega = this.entregaService.update(id, statusEntregaDto);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entrega);
   }
 
   @DeleteMapping("/{id}")

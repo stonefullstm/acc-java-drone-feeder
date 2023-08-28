@@ -18,7 +18,6 @@ public class EntregaService {
 
   private final String ERROR_MESSAGE = "Drone não encontrado";
   private final String ERROR_MESSAGE_ENTREGA = "Entrega não encontrada";
-  private final String ERROR_MESSAGE_NAO_ENCONTRADA = "Entrega não encontrada";
   @Autowired
   private EntregaRepository entregaRepository;
 
@@ -52,7 +51,7 @@ public class EntregaService {
    */
   public void delete(Long id) {
     Entrega entrega = this.entregaRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE_NAO_ENCONTRADA));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE_ENTREGA));
     Drone drone = entrega.getDrone();
     drone.removeEntrega(entrega);
     this.entregaRepository.deleteById(id);

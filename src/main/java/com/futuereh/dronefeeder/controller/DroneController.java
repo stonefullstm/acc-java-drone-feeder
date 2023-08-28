@@ -64,9 +64,8 @@ public class DroneController {
 
   @PutMapping("/{id}")
   @ApiOperation(value = "Update a drone", notes = "Update an existing drone")
-  public ResponseEntity<String> update(@PathVariable("id") Long id,
-      @RequestBody DroneDto droneDto) {
-    this.droneService.update(id, droneDto);
-    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Atualizado com sucesso");
+  public ResponseEntity<Drone> update(@PathVariable("id") Long id, @RequestBody DroneDto droneDto) {
+    Drone drone = this.droneService.update(id, droneDto);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).body(drone);
   }
 }
