@@ -1,7 +1,10 @@
-FROM maven:3.8.6-jdk-11
-
+FROM openjdk:11.0-jdk as build
 WORKDIR /app
 COPY . .
-RUN mvn clean install
+RUN ./mvnw clean package
 
-CMD mvn spring-boot:run
+FROM openjdk:11.0-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8888
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/app.jar"]
