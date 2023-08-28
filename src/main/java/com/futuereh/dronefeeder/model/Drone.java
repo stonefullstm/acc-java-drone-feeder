@@ -91,4 +91,10 @@ public class Drone {
     this.entregas.add(entrega);
   }
 
+  /**
+   * removeEntrega.
+   */
+  public void removeEntrega(Entrega entrega) {
+    this.entregas.remove(entrega);
+  }
 }
