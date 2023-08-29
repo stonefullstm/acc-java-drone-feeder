@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 
 /**
  * Entity Video.
@@ -13,14 +12,12 @@ import javax.persistence.Lob;
  */
 @Entity
 public class Video {
-  // source: https://www.baeldung.com/hibernate-lob
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column
-  private String nome;
-  @Lob
-  private byte[] video;
+  private String nomeArquivo;
 
   public Video() {
     super();
@@ -42,31 +39,17 @@ public class Video {
   }
 
   /**
-   * getNome.
+   * getNomeArquivo.
    */
-  public String getNome() {
-    return nome;
+  public String getNomeArquivo() {
+    return nomeArquivo;
   }
 
   /**
-   * setNome.
+   * setNomeArquivo.
    */
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
-
-  /**
-   * getVideo.
-   */
-  public byte[] getVideo() {
-    return video;
-  }
-
-  /**
-   * setVideo.
-   */
-  public void setVideo(byte[] video) {
-    this.video = video;
+  public void setNomeArquivo(String nomeArquivo) {
+    this.nomeArquivo = nomeArquivo;
   }
 
 }
