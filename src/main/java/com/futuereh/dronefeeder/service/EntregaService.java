@@ -1,10 +1,12 @@
 package com.futuereh.dronefeeder.service;
 
 import com.futuereh.dronefeeder.dto.StatusEntregaDto;
+import com.futuereh.dronefeeder.dto.VideoDto;
 import com.futuereh.dronefeeder.exceptions.EntityNaoExistenteException;
 import com.futuereh.dronefeeder.model.Drone;
 import com.futuereh.dronefeeder.model.Entrega;
 import com.futuereh.dronefeeder.model.StatusEntrega;
+import com.futuereh.dronefeeder.model.Video;
 import com.futuereh.dronefeeder.repository.DroneRepository;
 import com.futuereh.dronefeeder.repository.EntregaRepository;
 import java.time.Instant;
@@ -55,5 +57,18 @@ public class EntregaService {
     Drone drone = entrega.getDrone();
     drone.removeEntrega(entrega);
     this.entregaRepository.deleteById(id);
+  }
+
+  /**
+   * saveVideo.
+   */
+  public Video saveVideo(Long id, VideoDto videoDto) {
+    Entrega entrega = this.entregaRepository.findById(id)
+        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE_ENTREGA));
+    Video video = new Video();
+    video.setNomeArquivo(videoDto.getNomeArquivo());
+    entrega.setVideo(video);
+    Entrega savedEntrega = entregaRepository.save(entrega);
+    return savedEntrega.getVideo();
   }
 }
