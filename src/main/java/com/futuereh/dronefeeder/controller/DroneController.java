@@ -63,8 +63,11 @@ public class DroneController {
   }
 
   @PutMapping("/{id}")
+  @ApiResponses(value = {@ApiResponse(code = 204, message = "OK"),
+      @ApiResponse(code = 400, message = "Bad Request")})
   @ApiOperation(value = "Update a drone", notes = "Update an existing drone")
-  public ResponseEntity<Drone> update(@PathVariable("id") Long id, @RequestBody DroneDto droneDto) {
+  public ResponseEntity<Drone> update(@PathVariable("id") Long id,
+      @Valid @RequestBody DroneDto droneDto) {
     Drone drone = this.droneService.update(id, droneDto);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).body(drone);
   }

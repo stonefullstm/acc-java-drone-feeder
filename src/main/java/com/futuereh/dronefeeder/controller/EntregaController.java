@@ -1,5 +1,17 @@
 package com.futuereh.dronefeeder.controller;
 
+import com.futuereh.dronefeeder.dto.StatusEntregaDto;
+import com.futuereh.dronefeeder.dto.VideoDto;
+import com.futuereh.dronefeeder.model.Drone;
+import com.futuereh.dronefeeder.model.Entrega;
+import com.futuereh.dronefeeder.model.StatusEntrega;
+import com.futuereh.dronefeeder.model.Video;
+import com.futuereh.dronefeeder.service.EntregaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -15,27 +27,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.futuereh.dronefeeder.dto.StatusEntregaDto;
-import com.futuereh.dronefeeder.dto.VideoDto;
-import com.futuereh.dronefeeder.model.Drone;
-import com.futuereh.dronefeeder.model.Entrega;
-import com.futuereh.dronefeeder.model.StatusEntrega;
-import com.futuereh.dronefeeder.model.Video;
-import com.futuereh.dronefeeder.service.EntregaService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ApiParam;
 
 @Api(value = "Drone Feeder", tags = {"Delivery"})
 @RestController
 @RequestMapping("/entregas")
 public class EntregaController {
 
+  private final String status = "PENDENTE, ENTREGUE, NAOENTREGUE";
+
   @Autowired
   EntregaService entregaService;
 
+  /**
+   * save.
+   */
   @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
       @ApiResponse(code = 400, message = "Bad Request")})
   @GetMapping("/{id}")
@@ -44,14 +49,14 @@ public class EntregaController {
   public ResponseEntity<List<Entrega>> findByDrone(
       @ApiParam(name = "id", value = "Drone id") @PathVariable("id") Long id,
       @ApiParam(name = "status", value = "Delivery status", required = false,
-          allowableValues = "PENDENTE, ENTREGUE, NAOENTREGUE") @RequestParam Optional<String> status) {
+          allowableValues = status) @RequestParam Optional<String> status) {
     Optional<StatusEntrega> statusEntrega = status.map(this::toStatusEntrega);
     List<Entrega> entregas = this.entregaService.findByDrone(id, statusEntrega);
     return ResponseEntity.status(HttpStatus.OK).body(entregas);
   }
 
   @PutMapping("/{id}")
-  @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+  @ApiResponses(value = {@ApiResponse(code = 204, message = "OK"),
       @ApiResponse(code = 400, message = "Bad Request")})
   @ApiOperation(value = "Update delivery status", notes = "Update status of an existing delivery")
   public ResponseEntity<Entrega> update(@PathVariable("id") Long id,

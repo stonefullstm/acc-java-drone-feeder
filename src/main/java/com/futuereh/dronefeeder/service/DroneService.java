@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DroneService {
 
-  private final String ERROR_MESSAGE = "Drone não encontrado";
+  private final String errorMessage = "Drone não encontrado";
   @Autowired
   private DroneRepository droneRepository;
 
@@ -48,7 +48,7 @@ public class DroneService {
   @Transactional
   public Entrega saveEntrega(Long id, EntregaDto entregaDto) {
     Drone drone = this.droneRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.errorMessage));
     Entrega entrega = new Entrega();
     entrega.setLatitude(entregaDto.getLatitude());
     entrega.setLongitude(entregaDto.getLongitude());
@@ -64,7 +64,7 @@ public class DroneService {
    */
   public void delete(Long id) {
     this.droneRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.errorMessage));
     this.droneRepository.deleteById(id);
   }
 
@@ -73,7 +73,7 @@ public class DroneService {
    */
   public Drone update(Long id, DroneDto droneDto) {
     Drone drone = this.droneRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.errorMessage));
     drone.setNome(droneDto.getNome());
     drone.setModelo(droneDto.getModelo());
     return this.droneRepository.save(drone);

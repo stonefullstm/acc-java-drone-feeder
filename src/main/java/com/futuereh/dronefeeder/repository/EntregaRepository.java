@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EntregaRepository extends JpaRepository<Entrega, Long> {
 
-  @Query("SELECT e FROM Entrega e WHERE (e.drone = :drone) AND (:status IS NULL OR e.status = :status)")
+  @Query("SELECT e FROM Entrega e WHERE (e.drone = :drone) AND "
+      + "(:status IS NULL OR e.status = :status)")
   List<Entrega> findByDroneAndOptionalFilters(Drone drone, Optional<StatusEntrega> status);
 }

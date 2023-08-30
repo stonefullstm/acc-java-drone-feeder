@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EntregaService {
 
-  private final String ERROR_MESSAGE = "Drone não encontrado";
-  private final String ERROR_MESSAGE_ENTREGA = "Entrega não encontrada";
+  private final String errorMessage = "Drone não encontrado";
+  private final String errorMessageEntrega = "Entrega não encontrada";
   @Autowired
   private EntregaRepository entregaRepository;
 
@@ -31,7 +31,7 @@ public class EntregaService {
    */
   public List<Entrega> findByDrone(Long id, Optional<StatusEntrega> status) {
     Drone drone = this.droneRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.errorMessage));
     return this.entregaRepository.findByDroneAndOptionalFilters(drone, status);
   }
 
@@ -40,7 +40,7 @@ public class EntregaService {
    */
   public Entrega update(Long id, StatusEntregaDto statusEntregaDto) {
     Entrega entrega = this.entregaRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE_ENTREGA));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.errorMessageEntrega));
     entrega.setStatus(statusEntregaDto.getStatus());
     if (statusEntregaDto.getStatus().equals(StatusEntrega.ENTREGUE)) {
       entrega.setDataEntrega(Instant.now().toString());
@@ -53,7 +53,7 @@ public class EntregaService {
    */
   public void delete(Long id) {
     Entrega entrega = this.entregaRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE_ENTREGA));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.errorMessageEntrega));
     Drone drone = entrega.getDrone();
     drone.removeEntrega(entrega);
     this.entregaRepository.deleteById(id);
@@ -64,7 +64,7 @@ public class EntregaService {
    */
   public Video saveVideo(Long id, VideoDto videoDto) {
     Entrega entrega = this.entregaRepository.findById(id)
-        .orElseThrow(() -> new EntityNaoExistenteException(this.ERROR_MESSAGE_ENTREGA));
+        .orElseThrow(() -> new EntityNaoExistenteException(this.errorMessageEntrega));
     Video video = new Video();
     video.setNomeArquivo(videoDto.getNomeArquivo());
     entrega.setVideo(video);

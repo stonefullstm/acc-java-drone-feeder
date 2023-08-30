@@ -1,7 +1,7 @@
 package com.futuereh.dronefeeder.dto;
 
-import javax.validation.constraints.NotNull;
 import com.futuereh.dronefeeder.model.StatusEntrega;
+import javax.validation.constraints.NotNull;
 
 /**
  * Class StatusEntregaDto.

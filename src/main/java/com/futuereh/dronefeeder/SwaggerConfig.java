@@ -14,6 +14,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
+  /**
+   * postApi.
+   */
   @Bean
   public Docket postsApi() {
     return new Docket(DocumentationType.SWAGGER_2).groupName("public-api").apiInfo(apiInfo())
@@ -21,6 +25,9 @@ public class SwaggerConfig {
         .paths(PathSelectors.any()).build().useDefaultResponseMessages(false);
   }
 
+  /**
+   * apiInfo.
+   */
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder().title("Drone Feeder API")
         .description(
