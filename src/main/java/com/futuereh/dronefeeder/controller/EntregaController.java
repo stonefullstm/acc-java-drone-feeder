@@ -37,7 +37,7 @@ public class EntregaController {
   EntregaService entregaService;
 
   @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-      @ApiResponse(code = 400, message = "Parâmetro inválido")})
+      @ApiResponse(code = 400, message = "Bad Request")})
   @GetMapping("/{id}")
   @ApiOperation(value = "Find all deliveries",
       notes = "Find all deliveries made by a drone and filtered by status", response = Drone.class)
@@ -51,9 +51,11 @@ public class EntregaController {
   }
 
   @PutMapping("/{id}")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+      @ApiResponse(code = 400, message = "Bad Request")})
   @ApiOperation(value = "Update delivery status", notes = "Update status of an existing delivery")
   public ResponseEntity<Entrega> update(@PathVariable("id") Long id,
-      @RequestBody StatusEntregaDto statusEntregaDto) {
+      @Valid @RequestBody StatusEntregaDto statusEntregaDto) {
     Entrega entrega = this.entregaService.update(id, statusEntregaDto);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).body(entrega);
   }
