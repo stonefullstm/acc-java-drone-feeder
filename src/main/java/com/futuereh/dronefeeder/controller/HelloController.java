@@ -11,7 +11,7 @@ public class HelloController {
 
   @GetMapping
   private ResponseEntity<String> sayHello() {
-    return ResponseEntity.ok().body("Hello");
+    return ResponseEntity.ok().body("Bemvindo à API Drone Feeder");
   }
 
 }

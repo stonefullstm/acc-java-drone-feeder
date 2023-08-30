@@ -21,8 +21,9 @@ public class HelloControllerTest {
 
   @Test
   @Order(1)
-  @DisplayName("1 - Deve retornar Hello")
+  @DisplayName("1 - Deve retornar /Bemvindo à API Drone Feeder/")
   void deveRetornarHello() throws Exception {
-    mockMvc.perform(get("/hello")).andExpect(status().isOk()).andExpect(content().string("Hello"));
+    mockMvc.perform(get("/hello")).andExpect(status().isOk())
+        .andExpect(content().string("Bemvindo à API Drone Feeder"));
   }
 }
