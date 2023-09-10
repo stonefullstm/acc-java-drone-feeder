@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/entregas")
 public class EntregaController {
 
-  private final String status = "PENDENTE, ENTREGUE, NAOENTREGUE";
+  private final String statusOptions = "PENDENTE, ENTREGUE, NAOENTREGUE";
 
   @Autowired
   EntregaService entregaService;
@@ -49,7 +49,7 @@ public class EntregaController {
   public ResponseEntity<List<Entrega>> findByDrone(
       @ApiParam(name = "id", value = "Drone id") @PathVariable("id") Long id,
       @ApiParam(name = "status", value = "Delivery status", required = false,
-          allowableValues = status) @RequestParam Optional<String> status) {
+          allowableValues = statusOptions) @RequestParam Optional<String> status) {
     Optional<StatusEntrega> statusEntrega = status.map(this::toStatusEntrega);
     List<Entrega> entregas = this.entregaService.findByDrone(id, statusEntrega);
     return ResponseEntity.status(HttpStatus.OK).body(entregas);
